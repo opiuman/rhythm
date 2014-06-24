@@ -9,7 +9,7 @@ import (
 
 func main() {
 	longUrl := flag.String("longUrl", "http://www.google.com", "url")
-	token := flag.String("token", "b5e891db167ab4b65974cb3927348f35e2889094", "token")
+	token := flag.String("token", "1234567", "token")
 	flag.Parse()
 	shortUrl, err := rhythm.ShortUrl(*longUrl, *token)
 	if err != nil {
