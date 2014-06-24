@@ -7,8 +7,6 @@ import (
 	"net/http"
 )
 
-var defaultToken = "3435"
-
 type BitlyResp struct {
 	StatusCode int    `json:"status_code"`
 	StatusTxt  string `json:"status_txt"`
@@ -21,24 +19,24 @@ type BitlyResp struct {
 	} `json:"data"`
 }
 
-func ShortUrl(longUrl string) (string, error) {
-	req := "https://api-ssl.bitly.com/v3/shorten?access_token=" + defaultToken + "&longurl=" + longUrl + "&format=json"
+func ShortUrl(longUrl, token string) (string, error) {
+	req := fmt.Sprintf("https://api-ssl.bitly.com/v3/shorten?access_token=%s&longurl=%s&format=json", token, longUrl)
 	resp, err := http.Get(req)
 	if err != nil {
-		return "error", fmt.Errorf("connection failed: %s", err)
+		return "", err
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 
 	if err != nil {
-		return "error", fmt.Errorf("file read failed: %s", err)
+		return "", err
 	}
 	var br BitlyResp
 
-	UnmarshalErr := json.Unmarshal(body, &br)
+	unmarshalErr := json.Unmarshal(body, &br)
 
-	if UnmarshalErr != nil {
-		return "error", fmt.Errorf("unmarshal failed: %s", UnmarshalErr)
+	if unmarshalErr != nil {
+		return "", err
 	}
 
 	return br.Data.Url, nil
