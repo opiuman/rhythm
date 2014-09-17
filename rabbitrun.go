@@ -51,9 +51,7 @@ func main() {
 	forever := make(chan bool)
 
 	session, err := mgo.Dial(*msUrl)
-	if err != nil {
-		panic(err)
-	}
+	failOnError(err, "Failed to connect mongodb server")
 	defer session.Close()
 
 	session.SetMode(mgo.Monotonic, true)
