@@ -1,8 +1,5 @@
 **Rhythm: Utility**
 ------------------------------------------
-Hotfix
-=======
+1. urlshortener.go :  short the url by calling the bitly service.
 
-issue01 - 01
-issue01 - 02
-issue01 - 03
+2. rabbitrun.go : persist rabbitmq message to mongodb.
